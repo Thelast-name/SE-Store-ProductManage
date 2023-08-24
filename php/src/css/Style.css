@@ -27,69 +27,48 @@ h3 {
   text-align: end;
 }
 
-.s{
-  display: flex;
-  justify-content: space-between;
-}
-
-.o {
-  font-size: 17px;
-  width: 5%;
-  text-align: center;
-}
-
-.i-text {
-  border-radius: 5px;
-  border: 1px solid black;
-  padding: 7px 6px;
-  font-size: 17px;
-  margin: 0px 5px;
-}
-
-.i-text:focus{
-  outline: none;
-}
-
-.b {
-  border-radius: 5px;
-  padding: 7px 9px;
-  font-size: 20px;
-  border: none;
-  background-color: var(--blue-shade-Gradient1);
-  color: white;
-}
-
-.b:hover {
-  background-color: var(--blue-color2);
-}
-
 .c-1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 10px;
   row-gap: 10px;
   margin: 30px 0px;
+
+  height: 100vh;
+  overflow: auto;
 }
 
 .ca {
   border: 1px solid black;
   border-radius: 3px;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .ca-img {
   padding: 10px;
   text-align: center;
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  max-width: 100%;
+  flex: 1;
 }
 
 .ca-foo {
   border-top: 1px solid black;
   text-align: center;
   padding: 1rem 0px;
+
+  max-height: 100px;
 }
 
 .img-1 {
   object-fit: contain;
-  width: 160px;
+  max-width: 80px;
+  max-height: 80px;
   border-radius: 50%;
 }
 
@@ -97,16 +76,14 @@ h3 {
   padding: 10px;
   text-align: left;
   font-size: 17px;
+  line-height: 1.5rem;
+
+  margin-bottom: 3rem;
 }
 
 .lc-1 {
   text-decoration: none;
   color: black;
-}
-
-.conn-1 {
-  height: 100vh;
-  overflow: auto;
 }
 
 /* ---------------------------------------------- */
@@ -174,7 +151,6 @@ h3 {
     border-color: #333333;
     display: grid;
     grid-template-columns: auto auto auto auto auto;
-    overflow: auto;
 }
 
 .product .productBox {
@@ -192,10 +168,33 @@ h3 {
     height : 110px;
 }
 
-.product .productBox .productTxt {
-    font-size: 10pt;
-    font-weight: bold;
-    color: rgb(47, 42, 42);
-    margin-left: 10px;
+.product .productBox .productTxt p {
+  margin: 0px 0px 0px 10px;
 }
 
+
+.product .productBox button {
+  text-align: center;
+  margin-left: auto;
+  font-size: 15px;
+  border-radius: 8px;
+
+
+}
+
+.product .productBox button a {
+  text-decoration: none;
+  padding: 3px 8px;
+}
+
+h3 {
+  font-style: bold;
+  text-align: center;
+  padding: 5px 0;
+  margin-top: 2rem;
+}
+  
+select {
+    word-wrap: normal;
+    float: right;
+}

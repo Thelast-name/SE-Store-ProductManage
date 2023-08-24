@@ -3,7 +3,12 @@ version: '3.1'
 services:
   php-apache-environment:
     container_name: php-apache
-    image: php:8.2-apache
+    build: 
+      context: ./php
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    # image: php:8.2-apache
     volumes:
       - ./php/src:/var/www/html/
     ports:
