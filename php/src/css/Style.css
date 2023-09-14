@@ -1,3 +1,18 @@
+:root {
+  /* Generic Gradient */
+  --color-bule-1: #42C2FF;
+  --color-blue-2: #00D7FA;
+  --color-blue-3: #00E7DF;
+
+  /* Matching Gradient */
+  --Matching-g-1: #5BA9F6;
+  --Matching-g-2: #7B8DE3;
+
+  /* Shades */
+  --Shades-1: #009AD4;
+  --Shades-2: #0074AB;
+}
+
 * {     
     margin: 0;
     padding :0;
@@ -33,9 +48,6 @@ h3 {
   column-gap: 10px;
   row-gap: 10px;
   margin: 30px 0px;
-
-  height: 100vh;
-  overflow: auto;
 }
 
 .ca {
@@ -58,7 +70,7 @@ h3 {
 }
 
 .ca-foo {
-  border-top: 1px solid black;
+  /* border-top: 1px solid black; */
   text-align: center;
   padding: 1rem 0px;
 
@@ -88,7 +100,7 @@ h3 {
 
 /* ---------------------------------------------- */
 .navbar {
-    background-color: #076aff;
+    background-color: var(--Matching-g-1);
     height: 50px;
     display: flex;
     align-items: center;
@@ -197,4 +209,260 @@ h3 {
 select {
     word-wrap: normal;
     float: right;
+}
+
+.search {
+  padding: 10px;
+  background-color: rgb(132, 157, 248);
+  border-radius: 10px;
+}
+
+.search select {
+  word-wrap: normal;
+  float: right;
+  font-size: 14px;
+  color: red;
+  width: 250px;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.search input {
+  width: 250px;
+  font-size: 14px;
+  border-radius: 10px;
+  color : red;
+}
+
+.search button {
+  font-size: 12px;
+  color: white;
+  padding: 2px;
+  width: 60px;
+  background-color: #2407ff;
+  border-radius: 10px;
+}
+
+/* Membermanage */
+.main {
+  width: 70vw;
+  height: auto;
+  margin: 0 auto;
+}
+
+.adminHeader {
+  width: 100%;
+  height: 55px;
+  background: var(--Matching-g-1);
+  box-shadow: 0 0 10px #9fd4f8;
+}
+
+.logout-B{
+  padding: 0 1rem;
+  color: #fff;
+}
+
+.logout-B:hover {
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+.adminHeader .title {
+  color: white;
+  float: left;
+  margin-top: 10px;
+  margin-left: 5px;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.adminHeader p {
+  margin: 0;
+  font-size: 10pt;
+  color: rgb(6, 216, 249);
+  text-align: right;
+  padding-top: 5px;
+  margin-right: 10px;
+}
+
+.adminHeader button {
+  width: 60px;
+  background-color: #9fd4f8;
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.adminHeader ul.menubar {
+  margin: 0;
+  font-size: 11pt;
+  list-style: none;
+  float: right;
+  font-weight: lighter;
+}
+
+.adminHeader ul.menubar li {
+  float: left;
+  margin-right: 10px;
+}
+
+.adminHeader ul.menubar li a {
+  text-decoration: none;
+  color: rgb(245, 243, 249);
+  font-weight: bolder;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.main .adminZone {
+  width: 100%;
+  height: 620px;
+  background-color: #d5deee88;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 10px;
+  border-color: #fbf9f9;
+}
+
+.main .adminZone .headTopic {
+  margin: 2px;
+  width: 99%;
+  height: 45px;
+  background-color: #5165b4e7;
+  padding: 5px;
+  border-radius: 10px;
+  border: 2px solid #afaeae;
+  color: black;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 14pt;
+  font-weight: bolder;
+}
+
+.main .adminZone .zoneLeft {
+  width: 47%;
+  height: 550px;
+  margin-top: 5px;
+  margin-left: 15px;
+  background-color: #b0bde3fc;
+  border-radius: 10px;
+  border-color: #111111;
+  padding: 5px;
+  float: left;
+  overflow: auto;
+}
+
+.main .adminZone .zoneLeft label {
+  margin: 0px 10px;
+  font-weight: bolder;
+  float: left;
+  color: red;
+}
+
+.main .adminZone .zoneLeft input {
+  margin: 10px;
+  float: left;
+  color: rgb(38, 0, 255);
+}
+
+.main .adminZone .zoneLeft .button1 {
+  margin: 10px;
+  font-size: 14px;
+  float :right;   
+  color : white; 
+  background-color :rgb(134, 9, 237);
+  border: none;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.main .adminZone .zoneLeft .button2 {
+  font-size: 12px;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #afaeae;
+  margin: 3px 1px;
+}
+
+.main .adminZone .zoneLeft .button3 {
+  font-size: 12px;
+  color: white;
+  padding: 2px;
+  width: 40px;
+  background-color: #2407ff;
+  border-radius: 10px;
+}
+
+.main .adminZone .zoneLeft .mainTable {
+  margin: 2px 5px;
+  display: inline-table;
+  background-color :rgb(251, 247, 251);
+  width: 98%;
+  overflow: auto;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 10pt;
+}
+
+.main .adminZone .zoneLeft .mainTable tr {
+  border-bottom: 1px solid #afaeae;
+}
+
+.main .adminZone .zoneLeft input {
+  width: 200px;
+  font-size: 10pt;
+  border-radius: 10px;
+  color: red;
+  margin-top: 0;
+}
+
+.main .adminZone .zoneRight {
+  width: 50%;
+  height: 550px;
+  margin-top: 5px;
+  margin-left: 3px;
+  background-color: #f9f9f4f9;
+  border-radius: 10px;
+  border-color: #111111;
+  padding: 5px;
+  float: left;
+  text-align: center;
+}
+
+.main .adminZone .zoneRight label {
+  font-weight: bolder;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: red;
+}
+
+.main .adminZone .zoneRight .detail {
+  margin-left: 20px;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 95%;
+  border-radius: 10px;
+  font-size: 12pt;    
+}
+
+.main .adminZone .zoneRight img {
+  margin-top: 20px;
+  border-radius: 10px;
+  width: 120px;
+  height: 120px;
+}
+
+.main .adminZone .zoneRight button {
+  margin-top: 40px;
+  font-size: 14px;
+  float: right;
+  color: white;
+  background-color: blue;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
