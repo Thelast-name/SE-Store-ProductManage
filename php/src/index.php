@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-   require 'connectdb.php'; // Include the database connection file
+    require_once('scripts/Myscript.php');
+    $db_handle = new myDBControl();
+
+    $x = '';
+    // ตรวจสอบการส่ง คำค้น
+    if (isset($_POST['searvh'])) {
+        $x = "WHERE (Product_name LIKE '%".$_POST['searvh']."%')";    
+    }
+
+    //ตรวจสอบการส่ง ประเภทสินค้า
+    if (isset($_GET['Stype'])) {
+        $x = "WHERE (Product_type = '".$_GET['Stype']."')";    
+    }
 ?>
 
 <head>
@@ -49,21 +61,20 @@
 
     <!-- นราวิชญ์ -->
     <?php 
-        $reproduct = $pdo->prepare("SELECT PRODUCT.*, CONCAT(LEFT(Product_name, 10),'...') AS New_name, Type_name FROM PRODUCT INNER JOIN PRODUCT_TYPE ON (PRODUCT.Product_type=PRODUCT_TYPE.Type_no) LIMIT 5;"); 
-        $reproduct->execute();
-        $repro = $reproduct->fetchAll(PDO::FETCH_ASSOC);
-                    
+        $productdetail = $db_handle->Textquery("SELECT PRODUCT.*, CONCAT(LEFT(Product_name, 10),'...') AS New_name, Type_name FROM PRODUCT INNER JOIN PRODUCT_TYPE ON (PRODUCT.Product_type=PRODUCT_TYPE.Type_no) LIMIT 5;"); 
+   
+                   
     ?>
     <div class="product">
         <?php 
-            foreach ($repro as $repro1) {
+           foreach ($productdetail as $key => $value) {
         ?>
             <div class="productBox">
-                <img class="productImg" src="<?php echo $repro1["Product_picture"]; ?>">
+                <img class="productImg" src="<?php echo $productdetail[$key]["Product_picture"]; ?>">
                 <div class="productTxt">
-                    <p><?php echo $repro1["New_name"]; ?></p>
-                    <p><?php echo $repro1['Type_name'] ?></p>
-                    <p>Price :<?php echo $repro1['Product_price'] ?></p>
+                    <p><?php echo $productdetail[$key]["New_name"]; ?></p>
+                    <p><?php echo $productdetail[$key]['Type_name'] ?></p>
+                    <p>Price :  <?php echo $productdetail[$key]['Product_price'] ?></p>
                     <button><a href="#">ซื้อสินค้า</a></button>
                 </div>
             </div>
@@ -72,41 +83,48 @@
   
 
     <!-- พี่จาตุรนต์ -->
-    <h3 class="text-cetner">All Product</h3>
-    <div class="conn-1">
-        <div class="search" type="submit" >
-            <input type="text"  placeholder="Search" name="searvh" require>
-            <button type="submit" name="act" value="" class="btn btn-default">ค้นหา</button>      
-            <select class="select"  aria-label="Default select example">
-                <option selected>เลือกประเภทสินค้า</option>
-                <option value="1">ขนม</option>
-                <option value="2">อาหาร</option>
-                <option value="3">เครืองดื่ม</option>
-            </select>
+    <div class="row search">
+            <div class="col-5">
+                <form action= "index.php" Method="POST">
+                    <input type="text" placeholder="Search" name="searvh" require>
+                    <button type="submit" name="act" value="">ค้นหา</button>
+                </form>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-5">
+                <?php $Typedetail = $db_handle->Textquery("SELECT * FROM PRODUCT_TYPE;") ?>                
+                <select aria-label="Default select example" name = "Stype" 
+                onchange="window.location='index.php?Stype='+this.value+''">
+                    <?php if (empty($Typedetail)) { ?>
+                        <option selected>ไม่มีประเภทสินค้า</option>    
+                    <?php } else { ?>
+                        <option selected>ทุกประเภทสินค้า</option>
+                        <?php foreach ($Typedetail as $key => $value) {?>
+                             <option value="<?php echo $Typedetail[$key]["Type_no"]; ?>">
+                             <?php echo $Typedetail[$key]["Type_name"]; ?></option>
+                             <?php } 
+                    } ?>
+                </select>
+            </div>
         </div>
 
         <div class="c-1">
             <?php 
-                $stmt = $pdo->prepare("SELECT *, CONCAT(LEFT(Product_name, 13),'...') AS New_name, SUBSTRING(Type_name,LOCATE('-',Type_name)+1,50) AS New_type FROM PRODUCT INNER JOIN PRODUCT_TYPE ON (PRODUCT.Product_type = PRODUCT_TYPE.Type_no)");
-                $stmt->execute();
-            
-                // Fetch the results as associative arrays
-                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-                // Loop through the results and display them
-                foreach ($results as $row) {
+                $allpro = $db_handle->Textquery("SELECT PRODUCT.*, CONCAT(LEFT(Product_name, 20),'...') AS New_name, Type_name FROM PRODUCT INNER JOIN PRODUCT_TYPE ON (PRODUCT.Product_type=PRODUCT_TYPE.Type_no) ".$x.";");
+               
+                 foreach ($allpro  as $key => $value) {
             ?>
                 <div class="ca">
                     <div class="ca-img">
-                        <img src="<?php echo $row['Product_picture'] ?>" alt="" class="img-1">
+                        <img src="<?php echo $allpro [$key]['Product_picture'] ?>" alt="" class="img-1">
                     </div>
                     <div class="conent">
-                        <p>ชื่อสินค้า: <?php echo $row['New_name'] ?></p>
-                        <p>ประเภท: <?php echo $row['New_type'] ?></p>
-                        <p>ราคา: <?php echo $row['Product_price']; ?></p>
+                        <p><strong><?php echo $allpro[$key]["New_name"]; ?></strong></p>
+                        <p>Price: <?php echo $allpro [$key]['Product_price'] ?></p>
+                        <p>Stock in : <?php echo $allpro[$key]["Product_count"]; ?></p>
                     </div>
                     <div class="ca-foo">
-                        <p><a href="#" class="lc-1">Shop now</a></p>
+                        <button><a href="#" class="lc-1">Shop now</a></button>
                     </div>
                 </div>
             <?php } ?>

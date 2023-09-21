@@ -100,7 +100,7 @@ h3 {
 
 /* ---------------------------------------------- */
 .navbar {
-    background-color: var(--Matching-g-1);
+    background-color: #076aff;
     height: 50px;
     display: flex;
     align-items: center;

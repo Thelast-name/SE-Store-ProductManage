@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <?php
-    require 'connectdb.php';
+    require_once('scripts/Myscript.php');
+    $db_handle = new myDBControl();
 
     $x ='';
     if(isset($_POST['searvh'])) {
-        $x = "WHERE (Cust_fistname LIKE '%" . $_POST['searvh'] . "%')
-        OR (Cust__lastname LIKE '%" . $_POST['searvh'] . "%')";
+        $x = "WHERE (Emp_firstname LIKE '%" . $_POST['searvh'] . "%')
+        OR (Emp_lastname LIKE '%" . $_POST['searvh'] . "%')";
     }
 
 ?>
@@ -22,8 +23,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/Style.css">
-    <link rel="stylesheet" href="css/adminStyle.css">
-
 </head>
 
 <body class="">
@@ -50,28 +49,28 @@
                 <div class="">
                     <label>Member</label>
                     <button class="button1"><a href="?st=A">New Data</a></button>
-                    <form action="MemberManage.php" method="POST">
+                    <form action="?" method="POST">
                     <br><input type="text" name="searvh"><button class="button3">ค้นหา</button><br>
                 </div><br>
                 <div class="">
                     
                     <?php
-                      $member_sql = $pdo->prepare("SELECT *, CONCAT(TRIM(Emp_firstname ),'  ',Emp_lastname) AS New_name FROM EMPLOYEE INNER JOIN POSITION ON (EMPLOYEE.Emp_pos_id=POSITION.Pos_id) $x;"); 
-                      $member_sql->execute();
-                      $member = $member_sql->fetchAll(PDO::FETCH_ASSOC);
+                      $emp_sql = $db_handle->Textquery("SELECT *, CONCAT(TRIM(Emp_firstname ),'  ',Emp_lastname) AS New_name FROM EMPLOYEE INNER JOIN POSITION ON (EMPLOYEE.Emp_pos_id=POSITION.Pos_id) $x;");
                     ?>                  
                     <table class="mainTable">
                         <tr>
                             <th>#id</th>
-                            <th width="50%">Member name</th>
+                            <th width="40%">Member name</th>
+                            <th width="10%">Position</th>
                             <th>Work</th>
                         </tr>
-                        <?php foreach ($member as $member_show) { ?>
+                        <?php foreach ($emp_sql as $key => $value) { ?>
                             <tr>
-                                <td><?php echo $member_show["Emp_id"]; ?></td>
-                                <td><?php echo $member_show["New_name"]; ?></td>
-                                <td><button class="button2 bg-warning"><a href="?st=V&id=<?php echo $member_show['Emp_id']; ?>">View</a></button>
-                                    <button class="button2 bg-danger" onclick="return confirm('กรุณายืนยันการลบข้อมูล ?')"><a href="memberprocess.php?st=D&id=<?php echo $member_show['Emp_id']; ?>">Delete</a></button>
+                                <td><?php echo $emp_sql[$key]["Emp_id"]; ?></td>
+                                <td><?php echo $emp_sql[$key]["New_name"]; ?></td>
+                                <td><?php echo $emp_sql[$key]["Pos_name"]; ?></td>
+                                <td><button class="button2 bg-warning"><a href="?st=V&id=<?php echo $emp_sql[$key]['Emp_id']; ?>">View</a></button>
+                                    <button class="button2 bg-danger" onclick="return confirm('กรุณายืนยันการลบข้อมูล ?')"><a href="?st=D&id=<?php echo $emp_sql[$key]['Emp_id']; ?>">Delete</a></button>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -80,7 +79,7 @@
             </div>
             <div class="col zoneRight">
                 <?php
-                $id = $member_show['Emp_id'];
+                $id = $emp_sql[0]['Emp_id'];
                 $st = 'V';
                 if (isset($_GET['st'])) {
                     $st = $_GET['st'];
@@ -94,74 +93,88 @@
                         $id = '';
                     }
                 }
-                $DataMember_sql = $pdo->prepare("SELECT *, CONCAT(TRIM(Emp_firstname ),'  ',Emp_lastname) AS New_name FROM EMPLOYEE WHERE Emp_id = '$id'"); 
-                $DataMember_sql->execute();
-                $DataMember = $DataMember_sql->fetchAll(PDO::FETCH_ASSOC);
+                $emp_show = $db_handle->Textquery("SELECT *, CONCAT(TRIM(Emp_firstname),'  ',Emp_lastname) AS New_name FROM EMPLOYEE WHERE Emp_id = '$id'");
                 ?>
-                <form action="MemberProcess.php?st=<?php echo $st; ?>" method="POST">
-                <?php foreach ($DataMember as $DataMember_show) { ?>
+                <form action="EmployeeManage.php?st=<?php echo $st; ?>" method="POST">
                     <div class=" detail">
                         <div class="row mb-2">
                             <div class="col-4 p-0"><b>Member id :</b></div>
                             <div class="col-4">
-                                <input type="text" name="cid" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_id"]; ?>">
+                                <input type="text" name="eid" class="form-control p-0 pl-2" value="<?php echo $emp_show[0]["Emp_id"]; ?>">
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-4 p-0"> ชื่อนาม-สกุล:</div>
+                            <div class="col-4 p-0">User Name :</div>
                             <div class="col-4">
-                                <input type="text" name="uname" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_firstname"]; ?>">
-                            </div>
-                            <div class="col-4">
-                                <input type="text" name="uname" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_lastname"]; ?>">
+                                <input type="text" name="euname" class="form-control p-0 pl-2" value="<?php echo  $emp_show[0]["Emp_UN"]; ?>">
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-4 p-0">ตำแหน่ง :</div>
+                            <div class="col-4 p-0">Password :</div>
                             <div class="col-4">
-                                <input type="text" name="passwd" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_pos_id"]; ?>">
+                                <input type="text" name="epw" class="form-control p-0 pl-2" value="<?php echo  $emp_show[0]["Emp_PW"]; ?>">
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-4 p-0"> Prename :</div>
                             <div class="col">
-                                <input type="text" name="pname" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_prename"]; ?>">
+                                <input type="text" name="epname" class="form-control p-0 pl-2" value="<?php echo  $emp_show[0]["Emp_prename"]; ?>">
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-4 p-0">Emp code 1:</div>
-                            <div class="col-4 pr-0"><input type="text" name="fname" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_code1"]; ?>"></div>
+                            <div class="col-4 p-0">Employee Name:</div>
+                            <div class="col-4">
+                                <input type="text" name="efname" class="form-control p-0 pl-2" value="<?php echo $emp_show[0]["Emp_firstname"]; ?>">
+                            </div>
+                            <div class="col-4">
+                                <input type="text" name="elname" class="form-control p-0 pl-2" value="<?php echo $emp_show[0]["Emp_lastname"]; ?>">
+                            </div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-4 p-0">Emp code 2 :</div>
-                            <div class="col"><input type="text" name="mlevel" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_code2"]; ?>"></div>
+                            <div class="col-4 p-0">Position :</div>
+                            <div class="col-4">
+                                <select name="position" classclass="form-control p-0 pl-2">
+                                    <option><?php echo  $emp_show[0]["Emp_pos_id"] . " " . "[เดิม]"; ?></option>
+                                    <?php 
+                                        $member_show =  $db_handle->Textquery("SELECT Pos_id,Pos_name FROM POSITION");
+                                        foreach ($member_show as $key_1 => $value) { ?>
+                                        <option value="<?php echo $member_show[$key_1]['Pos_id']; ?>"><?php echo $member_show[$key_1]['Pos_id'] . " " . $member_show[$key_1]['Pos_name']; ?></option>
+                                <?php } ?>
+                                </select>
+                            </div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-4 p-0">Emp Bank :</div>
-                            <div class="col"><input type="text" name="birth" class="form-control p-0 pl-2" value="<?php echo $DataMember_show["Emp_bank"]; ?>"></div>
+                            <div class="col-4 p-0">Personal Code:</div>
+                            <div class="col-4 pr-0"><input type="text" name="pcode" class="form-control p-0 pl-2" value="<?php echo  $emp_show[0]["Emp_code1"]; ?>"></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4 p-0">Social Code:</div>
+                            <div class="col"><input type="text" name="scode" class="form-control p-0 pl-2" value="<?php echo  $emp_show[0]["Emp_code2"]; ?>"></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4 p-0">Bank Account:</div>
+                            <div class="col"><input type="text" name="bankA" class="form-control p-0 pl-2" value="<?php echo  $emp_show[0]["Emp_bank"]; ?>"></div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-4 p-0">Salary :</div>
-                            <div class="col"><textarea class="form-control p-0 pl-2" name="address" rows=3><?php echo $DataMember_show["Emp_salary"]; ?></textarea></div>
+                            <div class="col"><input type="text" name="salary" class="form-control p-0 pl-2" value="<?php echo $emp_show[0]["Emp_salary"]; ?>"></div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-5">
                                 <?php 
-                                    if(!isset($_GET['st']) == 'A'){
+                                    if($_GET['st'] == 'A'){
                                         ?>
                                         <input type="file" name="file_upload" accept="image/jpeg" require>
                                     <?php }else { ?>
                                         <p class="pl-4">รูปสมาชิก</p>
-                                        <img src="<?php echo $DataMember_show["Cust_picture"]; ?>">
+                                        <img src="<?php echo  $emp_show[0]["Emp_picture"]; ?>">
                                  <?php  } ?>
                             </div>
                             <div class="col-5 ">
-                              
                                 <button type="submit">Insert / Update Data</button>
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
                 </form>
             </div>
         </div>
