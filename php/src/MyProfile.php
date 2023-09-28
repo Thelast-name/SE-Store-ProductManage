@@ -66,7 +66,7 @@
             </div>
             <div class="f">
               <label class="l">Brithday</label>
-              <input type="date" class="inp" name="birth" value="<?php echo $myProfile[0]['Cust_birth']; ?>" />
+              <input type="text" class="inp" name="birth" value="<?php echo $myProfile[0]['Cust_birth']; ?>" />
             </div>
             <div class="f">
               <label class="l">Address</label>
@@ -76,7 +76,7 @@
               <label class="l">Telephone</label>
               <input type="text" class="inp" name="tel" value="<?php echo $myProfile[0]['Cust_tel']; ?>"/>
             </div>
-            <div class="f">
+            <div class="end-1">
               <button class="btn-shop" type="submit">Edit Profile</button>
             </div>
           </form>
