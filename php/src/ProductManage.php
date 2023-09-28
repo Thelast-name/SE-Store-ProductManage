@@ -25,20 +25,7 @@
 </head>
 
 <body class="">
-    <div class="adminHeader">
-        <div class="main">
-            <div class="title">
-                Admin Zone
-            </div>
-            <p>Hi, <?php echo "jaturon"; ?><a href="index.php" class="logout-B">Logout</a></b></p>
-            <ul class="menubar">
-                <li><b><a href="ProductManage.php">Product</b></li>
-                <li><b><a href="EmployeeManage.php">Employee</a></b></li>
-                <li><b><a href="MemberManage.php">Member</a></b></li>
-            </ul>
-        </div>
-    </div>
-
+    <?php include "Layout/navbar_admin.php"; ?>
     <div class="main">
         <div class="adminZone">
             <div class="headTopic">
@@ -46,7 +33,6 @@
             </div>
             <div class="col zoneLeft">
                 <div class="">
-                    <label>Member</label>
                     <button class="button1"><a href="?st=A">New Data</a></button>
                     <form action="?" method="POST">
                     <br><input type="text" name="searvh"><button class="button3">ค้นหา</button><br>
@@ -54,22 +40,22 @@
                 <div class="">
                     
                     <?php
-                        $product = $db_handle->Textquery("SELECT * FROM PRODUCT $x;"); 
+                        $product = $db_handle->Textquery("SELECT *, CONCAT(LEFT(Product_name, 15),'...') AS New_name FROM PRODUCT $x;"); 
                     ?>                  
                     <table class="mainTable">
                         <tr>
                             <th>#id</th>
-                            <th width="40%">Member name</th>
+                            <th width="40%">product name</th>
                             <th width="10%">In Stock</th>
                             <th>Work</th>
                         </tr>
                         <?php foreach ($product as $key => $value) { ?>
                             <tr>
                                 <td><?php echo $product[$key]["Product_id"]; ?></td>
-                                <td><?php echo $product[$key]["Product_name"]; ?></td>
+                                <td><?php echo $product[$key]["New_name"]; ?></td>
                                 <td><?php echo $product[$key]["Product_count"]; ?></td>
-                                <td><button class="button2 bg-warning"><a href="?st=V&id=<?php echo $product[$key]['Product_id']; ?>">View</a></button>
-                                    <button class="button2 bg-danger" onclick="return confirm('กรุณายืนยันการลบข้อมูล ?')"><a href="memberprocess.php?st=D&id=<?php echo $product[$key]['Product_id']; ?>">Delete</a></button>
+                                <td><button class="button2 bg-warning"><a class="ab" href="?st=V&id=<?php echo $product[$key]['Product_id']; ?>">View</a></button>
+                                    <button class="button2 bg-danger" onclick="confirm('กรุณายืนยันการลบข้อมูล ?')"><a class="ab" href="memberprocess.php?st=D&id=<?php echo $product[$key]['Product_id']; ?>">Delete</a></button>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -111,7 +97,14 @@
                         <div class="row mb-2">
                             <div class="col-4 p-0">Product Type:</div>
                             <div class="col-4">
-                                <input type="text" name="ptype" class="form-control p-0 pl-2" value="<?php echo $product_show[0]["Product_type"]; ?>">
+                            <select name="position" classclass="form-control p-0 pl-2">
+                                    <option><?php echo  $product_show[0]["Product_type"] . " " . "[เดิม]"; ?></option>
+                                    <?php 
+                                        $protype =  $db_handle->Textquery("SELECT * FROM PRODUCT_TYPE");
+                                        foreach ($protype as $key_1 => $value) { ?>
+                                        <option value="<?php echo $protype[$key_1]['Type_no']; ?>"><?php echo $protype[$key_1]['Type_no'] . " " . $protype[$key_1]['Type_name']; ?></option>
+                                <?php } ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-2">

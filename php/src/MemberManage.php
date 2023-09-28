@@ -26,20 +26,7 @@ if(isset($_POST['searvh'])) {
 </head>
 
 <body class="">
-    <div class="adminHeader">
-        <div class="main">
-            <div class="title">
-                Admin Zone
-            </div>
-            <p>Hi, <?php echo "jaturon"; ?><a href="index.php" class="logout-B">Logout</a></b></p>
-            <ul class="menubar">
-                <li><b><a href="ProductManage.php">Product</b></li>
-                <li><b><a href="EmployeeManage.php">Employee</a></b></li>
-                <li><b><a href="MemberManage.php">Member</a></b></li>
-            </ul>
-        </div>
-    </div>
-
+    <?php include "Layout/navbar_admin.php"; ?>
     <div class="main">
         <div class="adminZone">
             <div class="headTopic">
@@ -47,7 +34,6 @@ if(isset($_POST['searvh'])) {
             </div>
             <div class="col zoneLeft">
                 <div class="">
-                    <label>Member</label>
                     <button class="button1"><a href="?st=A">New Data</a></button>
                     <form action="MemberManage.php" method="POST">
                         <br><input type="text" name="searvh"><button class="button3">ค้นหา</button><br>
@@ -68,8 +54,8 @@ if(isset($_POST['searvh'])) {
                                 <td><?php echo $Data[$key]["Cust_id"]; ?></td>
                                 <td><?php echo $Data[$key]["New_name"]; ?></td>
                                 <td><?php echo $Data[$key]["Cust_birth"]; ?></td>
-                                <td><button class="button2 bg-warning"><a href="?st=V&id=<?php echo $Data[$key]['Cust_id']; ?>">View</a></button>
-                                    <button class="button2 bg-danger" onclick="confirm('กรุณายืนยันการลบข้อมูล ?')"><a href="MemberProcess.php?st=D&id=<?php echo $Data[$key]['Cust_id']; ?>">Delete</a></button>
+                                <td><button class="button2 bg-warning"><a class="ab" href="?st=V&id=<?php echo $Data[$key]['Cust_id']; ?>">View</a></button>
+                                    <button class="button2 bg-danger" onclick="confirm('กรุณายืนยันการลบข้อมูล ?')"><a class="ab" href="MemberProcess.php?st=D&id=<?php echo $Data[$key]['Cust_id']; ?>">Delete</a></button>
                                 </td>
                             </tr>
                         <?php } ?>

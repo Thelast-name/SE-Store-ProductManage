@@ -1,5 +1,5 @@
 <?php
-    require_once('myscript/Myscript.php');
+    require_once('scripts/Myscript.php');
     $db_handle = new myDBControl();
     session_start();
 
@@ -17,10 +17,10 @@
             header('Location: MyProfile.php');
         }else {
             $_SESSION['username'] = $check_login[0]['Firstname'];
-            header('Location: member.php');
+            header('Location: MemberManage.php');
         } 
     }else {
-        $_SESSION['error'] = "username or password not incorrect";
+        $_SESSION['error'] = "คุณไม่มีสิทธิ์ในการเข้าสู่ระบบ";
         header('Location: login.php');
     }
 ?>

@@ -3,6 +3,7 @@
 <?php
     require_once('scripts/Myscript.php');
     $db_handle = new myDBControl();
+    session_start(); 
 
     $x = '';
     // ตรวจสอบการส่ง คำค้น
@@ -29,7 +30,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 
 <!-- พี่ออมสิน -->
-<?php include('header.php'); ?>
+<?php include('Layout/header.php'); ?>
 <div class="container">
     <!-- วราวุฒิ -->
     <header class="header">
@@ -65,17 +66,26 @@
    
                    
     ?>
-    <div class="product">
+    <div class="c-1-top">
         <?php 
            foreach ($productdetail as $key => $value) {
         ?>
-            <div class="productBox">
-                <img class="productImg" src="<?php echo $productdetail[$key]["Product_picture"]; ?>">
-                <div class="productTxt">
+            <div class="ca">
+                <div class="ca-img">
+                    <img class="img-1" src="<?php echo $productdetail[$key]["Product_picture"]; ?>">
+                </div>
+                <div class="conent">
                     <p><?php echo $productdetail[$key]["New_name"]; ?></p>
                     <p><?php echo $productdetail[$key]['Type_name'] ?></p>
                     <p>Price :  <?php echo $productdetail[$key]['Product_price'] ?></p>
-                    <button><a href="#">ซื้อสินค้า</a></button>
+                    <div class="ca-foo">
+                        <?php
+                          if(empty($_SESSION['username']) &&  empty($_SESSION['Id'])){ ?>
+                            <a href="#" class="lc-1">Shop now</a>
+                          <?php }else { ?>
+                            <a href="Basket.php?id=<?php echo $productdetail[$key]["Product_id"]; ?>" class="lc-1">Shop now</a>
+                          <?php } ?>
+                    </div>
                 </div>
             </div>
         <?php } ?>
@@ -87,7 +97,7 @@
             <div class="col-5">
                 <form action= "index.php" Method="POST">
                     <input type="text" placeholder="Search" name="searvh" require>
-                    <button type="submit" name="act" value="">ค้นหา</button>
+                    <button type="submit" name="act" class="s-btn-search">ค้นหา</button>
                 </form>
             </div>
             <div class="col-2"></div>
@@ -124,7 +134,12 @@
                         <p>Stock in : <?php echo $allpro[$key]["Product_count"]; ?></p>
                     </div>
                     <div class="ca-foo">
-                        <button><a href="#" class="lc-1">Shop now</a></button>
+                        <?php
+                          if(empty($_SESSION['username']) &&  empty($_SESSION['Id'])){ ?>
+                            <a href="#" class="lc-1">Shop now</a>
+                          <?php }else { ?>
+                            <a href="Basket.php?id=<?php echo $allpro[$key]["Product_id"]; ?>" class="lc-1">Shop now</a>
+                          <?php } ?>
                     </div>
                 </div>
             <?php } ?>

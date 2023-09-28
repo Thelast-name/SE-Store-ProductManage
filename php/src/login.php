@@ -1,7 +1,7 @@
 <?php
-// require_once('myscript/Myscript.php');
-// $db_handle = new myDBControl();
-// session_start();
+    require_once('scripts/Myscript.php');
+    $db_handle = new myDBControl();
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -16,12 +16,27 @@
 </head>
 
 <body>
+    <div class="header">
+        <div class="main">
+            <div class="title">
+                5673603 Software Construction & Evolution
+            </div>
+            <ul class="menuber">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="#">Product</a></li>
+                <li><a href="#">Best Seller</a></li>
+                <li><a href="login.php">Login</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="main">
-        <div class="banner2"></div>
+        <div>
+            <img src="img/SE-STORE.png" class="banner2">
+        </div>
         <div class="page-login">
             <div class="col-1">
                 <h3 class="h">Welcome to SE-Store System:</h3>
-                <!-- <?php
+                <?php
                 if (isset($_SESSION['error'])) {
                 ?>
                     <div class="error">
@@ -30,16 +45,16 @@
                         unset($_SESSION['error']);
                         ?>
                     </div>
-                <?php } ?> -->
+                <?php } ?>
                 <form action="lnp.php" method="post">
                     <div class="login">
                         <div class="username">
                             <label class="s">User name:</label>
-                            <input class="i" type="text" name="username" placeholder="User name" value="E0001">
+                            <input class="i" type="text" name="username" placeholder="User name" value="C0001">
                         </div>
                         <div class="pass">
                             <label class="s">Password:</label>
-                            <input class="i" type="password" name="pass" placeholder="Password" value="qwerty">
+                            <input class="i" type="password" name="pass" placeholder="Password" value="1234">
                         </div>
                         <p class="fg"><a href="#">forgot password ?</a></p>
                         <button class="bli" type="submit" name="login">Login</button>
