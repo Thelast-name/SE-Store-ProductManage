@@ -2,13 +2,17 @@
   session_start(); 
   require_once('scripts/Myscript.php');
   $db_handle = new myDBControl();
+
+  if(empty($_SESSION['username']) &&  empty($_SESSION['Id'])){
+    header('location: login.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Basket</title>
     <link rel="stylesheet" href="css/mystyle.css" />
 </head>
 <body>
@@ -28,10 +32,10 @@
                     $pid = $_GET['id'];
                     $product_show = $db_handle->Textquery("SELECT * FROM PRODUCT INNER JOIN PRODUCT_TYPE ON PRODUCT.Product_type = PRODUCT_TYPE.Type_no WHERE Product_id = '$pid'");
                 ?>
-            <div class="col-1">
                 <?php 
                     if(!empty($product_show)){ ?>
-                         <div class="page-login">
+                    <div class="col-1">
+                    <div class="page-login">
                     <div class="col-1">
                         <div class="img-pr">
                             <img class="img-pr-o" src="<?php echo $product_show[0]['Product_picture']; ?>" width="200px">
@@ -76,6 +80,7 @@
                                 </div>
                             </div>
                     </form>
+                    </div>
                     <?php } ?>
                
                 <?php
@@ -104,10 +109,9 @@
                      }else {
                         echo "<script type='text/javascript'>alert('บันทึกข้อมูลไม่สำเร็จ');window.location = 'Basket.php';</script>";
                      }
-                }
+                    }
                     
-                ?>
-            </div>
+            ?>
             <div class="col-2">
                 <div class="f">
                     <p class="c j">Basket List : </p>
@@ -181,7 +185,7 @@
                     
                 </div>
                 <div class="a">
-                    <button class="btn-shop">ยืนยันการสั่งซื้อสินค้า</button>
+                    <button class="btn-shop"><a href="lnvoice.php">ยืนยันการสั่งซื้อสินค้า</a></button>
                 </div>
             </div>
             </div>
