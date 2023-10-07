@@ -8,10 +8,9 @@
 }
 
 .header {
-    /* margin: 3px 3px 0; */
     width: 100%;
-    height: 50px;
-    background: #fff;
+    height: 60px;
+    background: #0074AB;
 }
 
 .header .title {
@@ -20,6 +19,7 @@
     margin-left: 5px;
     font-size: 18pt;
     font-weight: bold;
+    color: #fff;
 }
 
 .header ul.menuber {
@@ -27,6 +27,7 @@
     list-style: none;
     float: right;
     margin-top: 10px;
+    color: #fff;
 }
 
 .header ul.menuber li {
@@ -40,6 +41,7 @@
     border-bottom: 2px solid transparent;
     padding-bottom: 10px;
     transition: all 0.3s ease;
+    color: #fff;
 }
 
 .header ul.menuber li a:hover {
@@ -73,6 +75,7 @@
     height: 200px;
     width: 100%;
     object-fit: contain;
+    margin: 20px 0;
 }
 
 .main .product {
@@ -416,12 +419,13 @@
 .btn-shop {
     padding: 5px 8px;
     font-size: 1rem;
-    background: navajowhite;
+    background: #009AD4;
     color: #fff;
     outline: none;
     border: none;
     border-radius: 8px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .img-pr {
@@ -464,4 +468,21 @@
 .a-link {
     text-decoration: none;
     color: #000;
+}
+
+.d-f {
+    display: flex;
+    gap: 20px;
+}
+
+.f-n {
+    padding: 0 8rem;
+}
+
+.e-n {
+    text-align: end;
+}
+
+.w {
+    margin: 10px 0;
 }
